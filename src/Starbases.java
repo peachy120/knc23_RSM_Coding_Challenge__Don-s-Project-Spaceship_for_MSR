@@ -1,38 +1,62 @@
+import java.util.ArrayList;
+
 public class Starbases {
     Starships starships;
 
     // Attributes
-    private int maxDefStrength;
-    private int dockedShips;
-    private int maxHealth;
+    private Fleets fleets;
+    public String starbaseName;
+    private Sector sector;
+
+    private int maxDefStrength = 20;
+    private int maxHealth = 500;
+
     private int currentDefStrength;
-    private int currentHealth;
+    public int currentHealth;
+
+    private ArrayList<Starships> dockedShips;
 
     //------------------------------------------------------------------------------------------------------------------
 
-    public Starbases (int maxDefStrength, int maxHealth) {
-        this.maxDefStrength = maxDefStrength;
-        //this.dockedShips = dockedShips;
-        this.maxHealth = maxHealth;
-        this.currentDefStrength = ( maxDefStrength * (currentHealth / maxHealth) ) + ( (dockedShips * starships.getCurrentDefStrength()) * (dockedShips / maxDefStrength) );
-        //this.currentHealth = currentHealth;
+    public Starbases(String starbaseName, Sector sector) {
+        this.fleets = null;
+        this.starbaseName = starbaseName;
+        this.sector = sector;
+
+        this.currentDefStrength = maxDefStrength;
+        this.currentHealth = maxHealth;
+
+        this.dockedShips = new ArrayList<>();
     }
 
     //------------------------------------------------------------------------------------------------------------------
     // this is getter
-    public int getMaxDefStrength(){
-        return maxDefStrength;
+    public Fleets getFleets() {
+        return fleets;
     }
 
-    public int getDockedShips() {
-        return dockedShips;
+    public String getStarbaseName() {
+        return starbaseName;
+    }
+
+    public Sector getSector() {
+        return sector;
+    }
+
+    /// ----------------------------------------------------------------------------------------------------------------
+
+    public int getMaxDefStrength() {
+        return maxDefStrength;
     }
 
     public int getMaxHealth() {
         return maxHealth;
     }
 
+    /// ----------------------------------------------------------------------------------------------------------------
+
     public int getCurrentDefStrength() {
+        currentDefStrength = ( maxDefStrength * (currentHealth / maxHealth)) + (fleets.dockedShipCurrentDefenceStrength() * (fleets.noOfDockedStarship() / maxDefStrength));
         return currentDefStrength;
     }
 
@@ -40,19 +64,20 @@ public class Starbases {
         return currentHealth;
     }
 
+    /// ----------------------------------------------------------------------------------------------------------------
+
+    public ArrayList<Starships> getDockedShips() {
+        return dockedShips;
+    }
+
     //------------------------------------------------------------------------------------------------------------------
     // this is setter
-    public void setMaxDefStrength(int maxDefStrength) {
-        this.maxDefStrength = maxDefStrength;
+
+    public void setSector(Sector sector) {
+        this.sector = sector;
     }
 
-    public void setDockedShips(int dockedShips) {
-        this.dockedShips = dockedShips;
-    }
-
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
+    /// ----------------------------------------------------------------------------------------------------------------
 
     public void setCurrentDefStrength(int currentDefStrength) {
         this.currentDefStrength = currentDefStrength;
@@ -60,5 +85,11 @@ public class Starbases {
 
     public void setCurrentHealth(int currentHealth) {
         this.currentHealth = currentHealth;
+    }
+
+    /// ----------------------------------------------------------------------------------------------------------------
+
+    public void setDockedShips(ArrayList<Starships> dockedShips) {
+        this.dockedShips = dockedShips;
     }
 }
