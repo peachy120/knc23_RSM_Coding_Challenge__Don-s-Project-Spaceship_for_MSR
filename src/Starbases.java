@@ -29,6 +29,10 @@ public class Starbases {
         this.dockedShips = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return starbaseName;
+    }
     //------------------------------------------------------------------------------------------------------------------
     // this is getter
     public Fleets getFleets() {

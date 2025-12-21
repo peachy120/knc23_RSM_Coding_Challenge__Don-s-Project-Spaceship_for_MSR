@@ -21,7 +21,7 @@ public class Fleets {
     }
 
     public void removeStarship(Starships starship) {
-        starships.remove(starship);
+        getStarships().remove(starship);
         System.out.println(playerID + "'s Starship: " + starship + "has been destroyed and being removed");
     }
 
@@ -84,9 +84,4 @@ public class Fleets {
         return count;
     }
 
-    public void moveAllToSector(Sector updateSector) {
-        for (Starships starship : starships) {
-            starship.moveToSector(updateSector);
-        }
-    }
 }

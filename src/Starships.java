@@ -38,6 +38,11 @@ public class Starships {
         this.isDestroy = false;
     }
 
+    @Override
+    public String toString() {
+        return starshipName;
+    }
+
     //------------------------------------------------------------------------------------------------------------------
     // getter
     public Fleets getFleets() {
@@ -142,16 +147,17 @@ public class Starships {
 
     public void dockWithStarbase(Starbases starbases) {
         if (starbases.getFleets().equals(fleets)) {
-            if (dockedAtStarbase = false) {
+            if (dockedAtStarbase == false) {
+                dockedAtStarbase = true;
                 setDockedAtStarbase(starbases);
                 ableToAttack = false;
-                System.out.println("Starship cannot attack now");
+                System.out.println(starshipName + " cannot attack now");
                 ableToMove = false;
-                System.out.println("Starship cannot move now");
+                System.out.println(starshipName + " cannot move now");
                 starbases.getDockedShips().add(this);
-                System.out.println(dockedAtStarbase + " is docked at " + starbases.starbaseName);
+                System.out.println(starshipName + " is docked at " + starbases.starbaseName);
             } else {
-                System.out.println(starshipName + "is already docked");
+                System.out.println(starshipName + " is already docked");
             }
         } else {
             System.out.println("This is your enemy's starbase, you cannot dock here. You can only dock at you starbase");
@@ -161,14 +167,15 @@ public class Starships {
     /// ----------------------------------------------------------------------------------------------------------------
 
     public void undockWithStarbase(Starbases starbases) {
-        if (dockedAtStarbase = true) {
+        if (dockedAtStarbase == true) {
+            dockedAtStarbase = false;
             setDockedAtStarbase(starbases);
             ableToAttack = true;
             System.out.println("Starship can attack now");
             ableToMove = true;
             System.out.println("Starship can move now");
             starbases.getDockedShips().remove(this);
-            System.out.println(dockedAtStarbase + " is undocked at " + starbases.starbaseName);
+            System.out.println(starshipName + " is undocked at " + starbases.starbaseName);
         } else {
             System.out.println(starshipName + " is not dock with the starbase");
         }
@@ -177,21 +184,33 @@ public class Starships {
     /// ----------------------------------------------------------------------------------------------------------------
 
     public void repair() {
-        if (dockedAtStarbase = true) {
-            setCurrentHealth(getMaxHealth());
-            System.out.println("Spaceship's current health is set to maximum");
-            setCurrentCrewNo(getMaxCrewNo());
-            System.out.println("SpaceShip's current crew number is set to maximum");
+        if (dockedAtStarbase == true) {
             if (currentHealth < (0.25 * maxHealth)) {
+                setCurrentHealth(getMaxHealth());
+                System.out.println("Spaceship's current health is set to maximum");
+                setCurrentCrewNo(getMaxCrewNo());
+                System.out.println("SpaceShip's current crew number is set to maximum");
                 noOfSubsequentActionsSkip = 4;
                 System.out.println("This spaceship need to skip the next 4 subsequent actions");
             } else if (currentHealth >= (0.25 * maxHealth) && currentHealth <= (0.49 * maxHealth)) {
+                setCurrentHealth(getMaxHealth());
+                System.out.println("Spaceship's current health is set to maximum");
+                setCurrentCrewNo(getMaxCrewNo());
+                System.out.println("SpaceShip's current crew number is set to maximum");
                 noOfSubsequentActionsSkip = 3;
                 System.out.println("This spaceship need to skip the next 3 subsequent actions");
             } else if (currentHealth >= (0.5 * maxHealth) && currentHealth <= (0.74 * maxHealth)) {
+                setCurrentHealth(getMaxHealth());
+                System.out.println("Spaceship's current health is set to maximum");
+                setCurrentCrewNo(getMaxCrewNo());
+                System.out.println("SpaceShip's current crew number is set to maximum");
                 noOfSubsequentActionsSkip = 2;
                 System.out.println("This spaceship need to skip the next 2 subsequent actions");
             } else if (currentHealth >= (0.75 * maxHealth)) {
+                setCurrentHealth(getMaxHealth());
+                System.out.println("Spaceship's current health is set to maximum");
+                setCurrentCrewNo(getMaxCrewNo());
+                System.out.println("SpaceShip's current crew number is set to maximum");
                 noOfSubsequentActionsSkip = 1;
                 System.out.println("This spaceship need to skip the next 1 subsequent actions");
             }
@@ -214,9 +233,6 @@ public class Starships {
             System.out.println("5 is higher than the Target Starship Damage Amount By Calculation");
         }
 
-        // Calculating the number of crew members from target starship were incapacitated in the attack
-        int targetCrewNoLost = (getCurrentAttackStrength() / targetStarship.getMaxHealth()) * targetStarship.currentCrewNo;
-
         // Checking is the attack starship and target starship from the same fleet
         if (targetStarship.fleets != (getFleets())) {
 
@@ -229,20 +245,25 @@ public class Starships {
                     targetStarship.setCurrentHealth(targetStarship.currentHealth - higherStarshipDamage);
                     System.out.println(targetStarship.starshipName + " current health after being attack is: " + targetStarship.currentHealth);
 
-                    if (targetStarship.currentHealth != 0) {
+                    if (targetStarship.currentHealth > 0) {
                         System.out.println("Target Starship current health is larger than 0 after being attack");
 
+
+                        // Calculating the number of crew members from target starship were incapacitated in the attack
+                        int targetCrewNoLost = (int) Math.round(((double)getCurrentAttackStrength() / targetStarship.getMaxHealth()) * targetStarship.currentCrewNo);
                         // Checking how many crew member are currently on target starship
-                        if (targetStarship.currentCrewNo < 1) {
+                        if (targetStarship.currentCrewNo > 1) {
                             System.out.println("Target starship has more than 1 crew member");
-                            if ((targetStarship.currentCrewNo - targetCrewNoLost) < targetStarship.currentCrewNo) {
+
+                            int targetNewCrewNo = targetStarship.getCurrentCrewNo() - targetCrewNoLost;
+                            if ((targetNewCrewNo) < targetStarship.currentCrewNo) {
                                 System.out.println("After losing " + targetCrewNoLost + " there will be 1 or more crew member left");
-                                targetStarship.setCurrentCrewNo(targetStarship.currentCrewNo - targetCrewNoLost);
-                                System.out.println("Target starship amount current crew member left after being attack: " + targetStarship.currentCrewNo);
+                                targetStarship.setCurrentCrewNo(targetNewCrewNo);
+                                System.out.println("Target starship amount current crew member left after being attack: " + targetStarship.getCurrentCrewNo());
                             } else {
                                 System.out.println("After losing " + targetCrewNoLost + " there will be no crew member left");
                                 targetStarship.setCurrentCrewNo(1);
-                                System.out.println("Target starship amount current crew member left after being attack: " + targetStarship.currentCrewNo);
+                                System.out.println("Target starship amount current crew member left after being attack: " + targetStarship.getCurrentCrewNo());
                             }
                         } else {
                             System.out.println("Target starship only has 1 crew member, so the amount of crew number dose not change");
