@@ -73,6 +73,10 @@ public class Starbases {
     //------------------------------------------------------------------------------------------------------------------
     // this is setter
 
+    public void setFleets(Fleets fleets) {
+        this.fleets = fleets;
+    }
+
     public void setSector(Sector sector) {
         this.sector = sector;
     }

@@ -15,8 +15,7 @@ public class Starships {
     private int currentAttackStrength;
     private int currentDefStrength;
 
-    private boolean isStarbaseDockedIn = false;
-
+    private boolean dockedAtStarbase = false;
     private boolean ableToAttack = true;
     private boolean ableToMove = true;
 
@@ -35,7 +34,7 @@ public class Starships {
         this.currentAttackStrength = maxAttackStrength;
         this.currentDefStrength = maxDefStrength;
 
-        this.isStarbaseDockedIn = false;
+        this.dockedAtStarbase = false;
         this.isDestroy = false;
     }
 
@@ -89,8 +88,8 @@ public class Starships {
 
     /// ----------------------------------------------------------------------------------------------------------------
 
-    public boolean isIsStarbaseDockedIn() {
-        return isStarbaseDockedIn;
+    public boolean isStarbaseDockedIn() {
+        return dockedAtStarbase;
     }
 
     public boolean isDestroy() {
@@ -123,8 +122,8 @@ public class Starships {
 
     /// ----------------------------------------------------------------------------------------------------------------
 
-    public void setIsStarbaseDockedIn(boolean isStarbaseDockedIn) {
-        this.isStarbaseDockedIn = isStarbaseDockedIn;
+    public void setDockedAtStarbase(Starbases starbase) {
+        this.dockedAtStarbase = dockedAtStarbase;
     }
 
     public void setIsDestroy(boolean isDestroy) {
@@ -141,36 +140,44 @@ public class Starships {
 
     /// ----------------------------------------------------------------------------------------------------------------
 
-    public void dockWithStarbase() {
-        if ( isStarbaseDockedIn = false) {
-            if ( sector.equals(starbases.getSector())) {
-                setIsStarbaseDockedIn(true);
-                System.out.println("Docked in with starbase");
+    public void dockWithStarbase(Starbases starbases) {
+        if (starbases.getFleets().equals(fleets)) {
+            if (dockedAtStarbase = false) {
+                setDockedAtStarbase(starbases);
                 ableToAttack = false;
                 System.out.println("Starship cannot attack now");
                 ableToMove = false;
                 System.out.println("Starship cannot move now");
+                starbases.getDockedShips().add(this);
+                System.out.println(dockedAtStarbase + " is docked at " + starbases.starbaseName);
+            } else {
+                System.out.println(starshipName + "is already docked");
             }
+        } else {
+            System.out.println("This is your enemy's starbase, you cannot dock here. You can only dock at you starbase");
         }
     }
 
     /// ----------------------------------------------------------------------------------------------------------------
 
-    public void undockFromStarbase() {
-        if ( isStarbaseDockedIn = true) {
-            setIsStarbaseDockedIn(false);
-            System.out.println("Undocked from starbase");
+    public void undockWithStarbase(Starbases starbases) {
+        if (dockedAtStarbase = true) {
+            setDockedAtStarbase(starbases);
             ableToAttack = true;
             System.out.println("Starship can attack now");
             ableToMove = true;
             System.out.println("Starship can move now");
+            starbases.getDockedShips().remove(this);
+            System.out.println(dockedAtStarbase + " is undocked at " + starbases.starbaseName);
+        } else {
+            System.out.println(starshipName + " is not dock with the starbase");
         }
     }
 
     /// ----------------------------------------------------------------------------------------------------------------
 
     public void repair() {
-        if (isStarbaseDockedIn = true) {
+        if (dockedAtStarbase = true) {
             setCurrentHealth(getMaxHealth());
             System.out.println("Spaceship's current health is set to maximum");
             setCurrentCrewNo(getMaxCrewNo());
@@ -217,7 +224,7 @@ public class Starships {
             if (targetStarship.getSector().equals(getSector())) {
                 System.out.println("Attack starship is in the same sector with target starship");
 
-                if (targetStarship.isStarbaseDockedIn = false) {
+                if (targetStarship.dockedAtStarbase == false) {
                     // Calculating and setting the current health of target starship after being attack
                     targetStarship.setCurrentHealth(targetStarship.currentHealth - higherStarshipDamage);
                     System.out.println(targetStarship.starshipName + " current health after being attack is: " + targetStarship.currentHealth);

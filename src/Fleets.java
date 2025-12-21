@@ -2,12 +2,12 @@ import java.util.ArrayList;
 
 public class Fleets {
     private int playerID;
-    private String starbases;
+    private Starbases starbases;
     private ArrayList<Starships> starships;
 
     //------------------------------------------------------------------------------------------------------------------
 
-    public Fleets(int playerID, String starbases) {
+    public Fleets(int playerID, Starbases starbases) {
         this.playerID = playerID;
         this.starbases = starbases;
         this.starships = new ArrayList<>();
@@ -15,7 +15,7 @@ public class Fleets {
 
     //------------------------------------------------------------------------------------------------------------------
 
-    public void addStarship(Starships starship){
+    public void addStarship(Starships starship) {
         starships.add(starship);
         System.out.println(playerID + "has a new Starship");
     }
@@ -31,7 +31,7 @@ public class Fleets {
         return playerID;
     }
 
-    public String getStarbases() {
+    public Starbases getStarbases() {
         return starbases;
     }
 
@@ -45,7 +45,7 @@ public class Fleets {
         this.playerID = playerID;
     }
 
-    public void setStarbases(String starbases) {
+    public void setStarbases(Starbases starbases) {
         this.starbases = starbases;
     }
 
@@ -69,10 +69,8 @@ public class Fleets {
     // Calculating the total of current defence strength of starships that are docked in
     public int dockedShipCurrentDefenceStrength() {
         int currentDefenceStrength = 0;
-        for (Starships starship : starships) {
-            if (starship.isIsStarbaseDockedIn()) {
-                currentDefenceStrength = currentDefenceStrength + starship.getCurrentDefStrength();
-            }
+        for (Starships starship : starbases.getDockedShips()) {
+            currentDefenceStrength = currentDefenceStrength + starship.getCurrentDefStrength();
         }
         return currentDefenceStrength;
     }
