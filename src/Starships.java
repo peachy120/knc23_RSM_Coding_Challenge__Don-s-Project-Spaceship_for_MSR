@@ -222,6 +222,9 @@ public class Starships {
     /// ----------------------------------------------------------------------------------------------------------------
 
     public void attackStarshipTarget(Starships targetStarship) {
+        if (shouldThisActionBeSkip()) {
+            return;
+        }
         // Calculating which amount of damage is higher
         int targetDamageAmountByCalculation = getCurrentAttackStrength() - targetStarship.getCurrentDefStrength();
         int higherStarshipDamage = targetDamageAmountByCalculation;
@@ -311,6 +314,16 @@ public class Starships {
             }
         } else {
             System.out.println("Cannot attack starbase within the same fleet");
+        }
+    }
+
+    private boolean shouldThisActionBeSkip() {
+        if (noOfSubsequentActionsSkip > 0) {
+            noOfSubsequentActionsSkip = noOfSubsequentActionsSkip - 1;
+            System.out.println(starshipName + " is now being repaired. No action perform. Next " + noOfSubsequentActionsSkip + " actions will ne skip");
+            return true;
+        } else {
+            return false;
         }
     }
 }

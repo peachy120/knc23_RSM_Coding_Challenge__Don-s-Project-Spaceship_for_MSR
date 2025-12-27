@@ -93,6 +93,10 @@ public class Main {
         System.out.println("-Player 2 Starship C current Crew No after being repair is : " + player2StarshipC.getCurrentCrewNo());
         System.out.println(" ");
 
+        // this code is to test will is the skip action function works
+//        player2StarshipC.attackStarshipTarget(player1StarshipA);
+//        System.out.println("~~");
+
         // 7. Commands all starships in the “Player 1” fleet to attack the “Player 2” starbase (repeatedly, until the “Player 2” starbase is destroyed).
         System.out.println("7. Commands all starships in the Player 1 fleet to attack the Player 2 starbase (repeatedly, until the Player 2 starbase is destroyed).");
         while (player2Starbase.getCurrentHealth() > 0) {
