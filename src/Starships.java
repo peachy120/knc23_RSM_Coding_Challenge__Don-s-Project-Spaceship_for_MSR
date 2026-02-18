@@ -6,9 +6,11 @@ public class Starships {
     private Sector sector;
 
     private int maxAttackStrength = 30;
-    private int maxDefStrength = 10;
+    //private int maxDefStrength = 10; // original
+    private int maxDefStrength = 15;
     private int maxCrewNo = 10;
-    private int maxHealth = 100;
+    //private int maxHealth = 100; // original
+    private int maxHealth = 150;
 
     private int currentHealth;
     private int currentCrewNo;
@@ -21,9 +23,12 @@ public class Starships {
 
     private boolean isDestroy = false;
 
+    private boolean beingRepaired = false;
     private int noOfSubsequentActionsSkip = 0;
-    //------------------------------------------------------------------------------------------------------------------
 
+    private boolean isCloak = false;
+    //------------------------------------------------------------------------------------------------------------------
+    // This is the constructor, creating the current object. setting up the starting state of the starship
     public Starships(Fleets fleets, String starshipName, Sector sector) {
         this.fleets = fleets;
         this.starshipName = starshipName;
@@ -36,6 +41,11 @@ public class Starships {
 
         this.dockedAtStarbase = false;
         this.isDestroy = false;
+
+        this.beingRepaired = false;
+        this.noOfSubsequentActionsSkip = 0;
+
+        this.isCloak = false;
     }
 
     @Override
@@ -101,6 +111,12 @@ public class Starships {
         return isDestroy;
     }
 
+    public boolean getBeingRepaired() { return beingRepaired;}
+
+    public boolean getIsCloak() {return isCloak;}
+
+    public int getNoOfSubsequentActionsSkip() { return noOfSubsequentActionsSkip; }
+
     //------------------------------------------------------------------------------------------------------------------
     // setter
     public void setSector(Sector sector) {
@@ -134,6 +150,12 @@ public class Starships {
     public void setIsDestroy(boolean isDestroy) {
         this.isDestroy = isDestroy;
     }
+
+    public void setBeingRepaired() { this.beingRepaired = beingRepaired; }
+
+    public void setIsCloak() {this.isCloak = isCloak; }
+
+    public void setNoOfSubsequentActionsSkip() {this.noOfSubsequentActionsSkip = noOfSubsequentActionsSkip; }
 
 
     //------------------------------------------------------------------------------------------------------------------
@@ -185,6 +207,7 @@ public class Starships {
 
     public void repair() {
         if (dockedAtStarbase == true) {
+            beingRepaired = true;
             if (currentHealth < (0.25 * maxHealth)) {
                 setCurrentHealth(getMaxHealth());
                 System.out.println("Spaceship's current health is set to maximum");
@@ -317,7 +340,7 @@ public class Starships {
         }
     }
 
-    private boolean shouldThisActionBeSkip() {
+    public boolean shouldThisActionBeSkip() {
         if (noOfSubsequentActionsSkip > 0) {
             noOfSubsequentActionsSkip = noOfSubsequentActionsSkip - 1;
             System.out.println(starshipName + " is now being repaired. No action perform. Next " + noOfSubsequentActionsSkip + " actions will ne skip");
@@ -326,4 +349,16 @@ public class Starships {
             return false;
         }
     }
+
+    public boolean cloak() {
+        if (getIsCloak() == true) {
+            int health = getCurrentHealth();
+
+            setCurrentHealth(health);
+            System.out.println("Current Health of " + starshipName + " is " + getCurrentHealth());
+            isCloak = false;
+        }
+        return true;
+    }
+
 }

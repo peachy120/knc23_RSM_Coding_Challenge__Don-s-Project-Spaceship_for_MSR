@@ -6,7 +6,7 @@ public class Fleets {
     private ArrayList<Starships> starships;
 
     //------------------------------------------------------------------------------------------------------------------
-
+    // This is the constructor, creating the current object. setting up the starting state of the fleet
     public Fleets(int playerID, Starbases starbases) {
         this.playerID = playerID;
         this.starbases = starbases;
@@ -67,9 +67,21 @@ public class Fleets {
 
     //------------------------------------------------------------------------------------------------------------------
     // Calculating the total of current defence strength of starships that are docked in
+    public int dockedShipCurrentDefenceStrength2() {
+        int currentDefenceStrength = 0;
+        for (Starships starship : starbases.getDockedShips()) {
+            currentDefenceStrength = currentDefenceStrength + starship.getCurrentDefStrength();
+        }
+        return currentDefenceStrength;
+    }
+
     public int dockedShipCurrentDefenceStrength() {
         int currentDefenceStrength = 0;
         for (Starships starship : starbases.getDockedShips()) {
+            if (starship.getBeingRepaired() == true) {
+                currentDefenceStrength = 0;
+                currentDefenceStrength = 0 + starship.getCurrentDefStrength();
+            }
             currentDefenceStrength = currentDefenceStrength + starship.getCurrentDefStrength();
         }
         return currentDefenceStrength;
@@ -82,6 +94,16 @@ public class Fleets {
             count = count + 1;
         }
         return count;
+    }
+
+    public void towStarbase(Sector sector) {
+
+        for (Starships starship : starships) {
+            if (starship.getFleets() != starbases.getFleets()) {
+                starship.moveToSector(starbases.getSector());
+            }
+        }
+
     }
 
 }

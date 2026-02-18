@@ -14,10 +14,12 @@ public class Starbases {
     private int currentDefStrength;
     public int currentHealth;
 
+    private int currentAttackStrength;
+
     private ArrayList<Starships> dockedShips;
 
     //------------------------------------------------------------------------------------------------------------------
-
+    // This is the constructor, creating the current object. setting up the starting state of the starbase
     public Starbases(String starbaseName, Sector sector) {
         this.fleets = null;
         this.starbaseName = starbaseName;
@@ -25,6 +27,8 @@ public class Starbases {
 
         this.currentDefStrength = maxDefStrength;
         this.currentHealth = maxHealth;
+
+        this.currentAttackStrength = currentAttackStrength;
 
         this.dockedShips = new ArrayList<>();
     }
@@ -68,6 +72,8 @@ public class Starbases {
         return currentHealth;
     }
 
+    public int getCurrentAttackStrength() {return currentAttackStrength;}
+
     /// ----------------------------------------------------------------------------------------------------------------
 
     public ArrayList<Starships> getDockedShips() {
@@ -95,9 +101,28 @@ public class Starbases {
         this.currentHealth = currentHealth;
     }
 
+    public void setCurrentAttackStrength(int currentAttackStrength) { this.currentAttackStrength = currentAttackStrength; }
+
     /// ----------------------------------------------------------------------------------------------------------------
 
     public void setDockedShips(ArrayList<Starships> dockedShips) {
         this.dockedShips = dockedShips;
     }
+
+    //------------------------------------------------------------------------------------------------------------------
+    // actions
+
+    public void attackTarget(Starships target) {
+        currentAttackStrength = 0;
+
+        for (Starships starship : getDockedShips()) {
+            if (starship.getBeingRepaired() == true) {
+                currentAttackStrength = 0;
+                currentAttackStrength = 0 + starship.getCurrentDefStrength();
+            }
+            currentAttackStrength = currentAttackStrength + starship.getCurrentAttackStrength();
+        }
+
+    }
+
 }

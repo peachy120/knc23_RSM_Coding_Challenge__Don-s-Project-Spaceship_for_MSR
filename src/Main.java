@@ -71,6 +71,7 @@ public class Main {
         System.out.println("5. ");
         System.out.println("-Current health of Player 2 Starship C after being attack is : " + player2StarshipC.getCurrentHealth());
         System.out.println("-Current Crew Number of Player 2 Starship C after being attack is : " + player2StarshipC.getCurrentCrewNo());
+        System.out.println(("--------CurrentDefenceStrength: " + player2Starbase.getCurrentDefStrength()));
         System.out.println(" ");
         player1StarshipA.attackStarshipTarget(player2StarshipC);
         System.out.println("-Current health of Player 2 Starship C after being attack is : " + player2StarshipC.getCurrentHealth());
